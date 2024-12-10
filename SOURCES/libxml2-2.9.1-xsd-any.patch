@@ -1,0 +1,85 @@
+From e8c9cd5c7a0d2ea95edf08b13af3baabce62dd63 Mon Sep 17 00:00:00 2001
+From: Nick Wellnhofer <wellnhofer@aevum.de>
+Date: Mon, 16 Sep 2019 15:36:02 +0200
+Subject: [PATCH] Fix Schema determinism check of ##other namespaces
+
+Non-compound (##local) and compound string atoms are always disjoint
+regardless of whether the compound atom is negated (##other).
+
+Closes #40.
+---
+ result/schemas/issue40_0_0     |  1 +
+ result/schemas/issue40_0_0.err |  0
+ test/schemas/issue40_0.xml     |  3 +++
+ test/schemas/issue40_0.xsd     | 10 ++++++++++
+ xmlregexp.c                    | 15 ++++++++++++---
+ 5 files changed, 26 insertions(+), 3 deletions(-)
+ create mode 100644 result/schemas/issue40_0_0
+ create mode 100644 result/schemas/issue40_0_0.err
+ create mode 100644 test/schemas/issue40_0.xml
+ create mode 100644 test/schemas/issue40_0.xsd
+
+diff --git a/result/schemas/issue40_0_0 b/result/schemas/issue40_0_0
+new file mode 100644
+index 00000000..73c9e696
+--- /dev/null
++++ b/result/schemas/issue40_0_0
+@@ -0,0 +1 @@
++./test/schemas/issue40_0.xml validates
+diff --git a/result/schemas/issue40_0_0.err b/result/schemas/issue40_0_0.err
+new file mode 100644
+index 00000000..e69de29b
+diff --git a/test/schemas/issue40_0.xml b/test/schemas/issue40_0.xml
+new file mode 100644
+index 00000000..86cff1d0
+--- /dev/null
++++ b/test/schemas/issue40_0.xml
+@@ -0,0 +1,3 @@
++<a:aaa xmlns:a="aaa_ns">
++  <x/>
++</a:aaa>
+diff --git a/test/schemas/issue40_0.xsd b/test/schemas/issue40_0.xsd
+new file mode 100644
+index 00000000..a7eff55b
+--- /dev/null
++++ b/test/schemas/issue40_0.xsd
+@@ -0,0 +1,10 @@
++<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="aaa_ns" xmlns="http://www.w3.org/1999/XSL/Transform">
++	<xsd:element name="aaa">
++		<xsd:complexType>
++			<xsd:choice>
++				<xsd:any namespace="##other" processContents="skip" />
++				<xsd:any namespace="##local" processContents="skip" />
++			</xsd:choice>
++		</xsd:complexType>
++	</xsd:element>
++</xsd:schema>
+diff --git a/xmlregexp.c b/xmlregexp.c
+index 1e8bf934..10969177 100644
+--- a/xmlregexp.c
++++ b/xmlregexp.c
+@@ -2528,9 +2528,18 @@ xmlFACompareAtoms(xmlRegAtomPtr atom1, xmlRegAtomPtr atom2, int deep) {
+         case XML_REGEXP_STRING:
+             if (!deep)
+                 ret = (atom1->valuep != atom2->valuep);
+-            else
+-                ret = xmlRegStrEqualWildcard((xmlChar *)atom1->valuep,
+-                                             (xmlChar *)atom2->valuep);
++            else {
++                xmlChar *val1 = (xmlChar *)atom1->valuep;
++                xmlChar *val2 = (xmlChar *)atom2->valuep;
++                int compound1 = (xmlStrchr(val1, '|') != NULL);
++                int compound2 = (xmlStrchr(val2, '|') != NULL);
++
++                /* Ignore negative match flag for ##other namespaces */
++                if (compound1 != compound2)
++                    return(0);
++
++                ret = xmlRegStrEqualWildcard(val1, val2);
++            }
+ 	    break;
+         case XML_REGEXP_EPSILON:
+ 	    goto not_determinist;
+-- 
+2.24.2
+
