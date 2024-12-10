@@ -4,7 +4,7 @@
 Summary: Library providing XML and HTML support
 Name: libxml2
 Version: 2.9.1
-Release: 6.1%{?dist}%{?extra_release}.6
+Release: 6.1%{?dist}%{?extra_release}.7
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/libxml2/libxml2-%{version}.tar.gz
@@ -76,9 +76,14 @@ patch148: libxml2-2.9.1-CVE-2020-7595.patch
 patch149: libxml2-2.9.1-xsd-any.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1966916
 patch150: libxml2-2.9.1-CVE-2016-4658.patch
+# CIQ patches
 patch151: CVE-2021-3516.patch
 patch152: CVE-2021-3517.patch
 patch153: CVE-2021-3518.patch
+patch154: CVE-2022-23308.patch
+patch155: CVE-2022-40304.patch
+patch156: CVE-2021-3537.patch
+patch157: CVE-2022-40303.patch
 
 
 %description
@@ -196,6 +201,10 @@ at parse time or later once the document has been modified.
 %patch151 -p1
 %patch152 -p1
 %patch153 -p1
+%patch154 -p1
+%patch155 -p1
+%patch156 -p1
+%patch157 -p1
 
 %build
 %configure
@@ -278,7 +287,13 @@ rm -fr %{buildroot}
 %doc doc/python.html
 
 %changelog
-* Mon Dec 09 2024 Matt Hink <dking@redhat.com> - 2.9.1-6.1.6
+* Tue Dec 10 2024 Matt Hink <mhink@ciq.com> - 2.9.1-6.1.7
+- Fix CVE-2022-23308
+- Fix CVE-2022-40304
+- Fix CVE-2021-3537
+- Fix CVE-2022-40303
+
+* Mon Dec 09 2024 Matt Hink <mhink@ciq.com> - 2.9.1-6.1.6
 - Fix CVE-2021-3516
 - Fix CVE-2021-3517
 - Fix CVE-2021-3518
