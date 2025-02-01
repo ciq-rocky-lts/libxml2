@@ -4,7 +4,7 @@
 Summary: Library providing XML and HTML support
 Name: libxml2
 Version: 2.9.1
-Release: 6.1%{?dist}%{?extra_release}.7
+Release: 6.1%{?dist}%{?extra_release}.8
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/libxml2/libxml2-%{version}.tar.gz
@@ -84,6 +84,18 @@ patch154: CVE-2022-23308.patch
 patch155: CVE-2022-40304.patch
 patch156: CVE-2021-3537.patch
 patch157: CVE-2022-40303.patch
+patch158: CVE-2017-0663.patch
+patch159: CVE-2017-9049-9050-16931.patch
+patch160: CVE-2017-9047-9048.patch
+patch161: CVE-2020-24977.patch
+patch162: CVE-2021-3541.patch
+patch163: CVE-2022-29824.patch
+patch164: CVE-2023-28484.patch
+patch165: CVE-2023-29469.patch
+patch166: CVE-2023-39615.patch
+patch167: CVE-2023-45322.patch
+patch168: CVE-2024-25062.patch
+patch169: CVE-2024-34459.patch
 
 
 %description
@@ -205,6 +217,18 @@ at parse time or later once the document has been modified.
 %patch155 -p1
 %patch156 -p1
 %patch157 -p1
+%patch158 -p1
+%patch159 -p1
+%patch160 -p1
+%patch161 -p1
+%patch162 -p1
+%patch163 -p1
+%patch164 -p1
+%patch165 -p1
+%patch166 -p1
+%patch167 -p1
+%patch168 -p1
+%patch169 -p1
 
 %build
 %configure
@@ -287,6 +311,23 @@ rm -fr %{buildroot}
 %doc doc/python.html
 
 %changelog
+* Fri Jan 03 2025 Jonathan Dieter <jdieter@ciq.com> - 2.9.1-6.1.8
+- Fix CVE-2017-0663
+- Fix CVE-2017-9047
+- Fix CVE-2017-9048
+- Fix CVE-2017-9049
+- Fix CVE-2017-9050
+- Fix CVE-2017-16931
+- Fix CVE-2020-24977
+- Fix CVE-2021-3541
+- Fix CVE-2022-29824
+- Fix CVE-2023-28484
+- Fix CVE-2023-29469
+- Fix CVE-2023-39615
+- Fix CVE-2023-45322
+- Fix CVE-2024-25062
+- Fix CVE-2024-34459
+
 * Tue Dec 10 2024 Matt Hink <mhink@ciq.com> - 2.9.1-6.1.7
 - Fix CVE-2022-23308
 - Fix CVE-2022-40304
