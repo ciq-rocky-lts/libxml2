@@ -1,6 +1,6 @@
 Name:           libxml2
 Version:        2.9.13
-Release:        7%{?dist}
+Release:        7%{?dist}.1
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -24,8 +24,13 @@ Patch7:         libxml2-2.9.13-CVE-2023-29469.patch
 Patch8:         libxml2-2.11.0-fix-CVE-2023-39615.patch
 # https://issues.redhat.com/browse/RHEL-34457
 Patch9:         libxml2-2.11.6-CVE-2024-25062.patch
-#https://bugzilla.redhat.com/show_bug.cgi?id=2342118
-Patch10:         0001-CVE-2022-49043.patch
+# https://issues.redhat.com/browse/RHEL-76294
+Patch10:        libxml2-2.9.13-CVE-2022-49043.patch
+# https://issues.redhat.com/browse/RHEL-80127
+Patch11:        libxml2-2.9.13-CVE-2024-56171.patch
+# https://issues.redhat.com/browse/RHEL-80142
+Patch12:        libxml2-2.9.13-CVE-2025-24928.patch
+
 BuildRequires:  cmake-rpm-macros
 BuildRequires:  gcc
 BuildRequires:  make
@@ -153,8 +158,15 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
-* Fri Feb 07 2025 Anmol Jain <ajain@ciq.com> - 2.9.13-7
-- Fix CVE-2022-49043
+* Thu Mar 20 2025 Anmol Jain <ajain@ciq.com> - 2.9.13-7.1
+- Bump to ensure that previously backported pkg is updated
+
+* Tue Mar 11 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.9.13-6.2
+- Fix CVE-2024-56171 (RHEL-80128)
+- Fix CVE-2025-24928 (RHEL-80143)
+
+* Tue Feb 11 2025 David King <dking@redhat.com> - 2.9.13-6.1
+- Fix CVE-2022-49043 (RHEL-76294)
 
 * Mon Apr 29 2024 David King <amigadave@amigadave.com> - 2.9.13-6
 - Fix CVE-2024-25062 (RHEL-29196)
