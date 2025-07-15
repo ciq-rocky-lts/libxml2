@@ -7,7 +7,7 @@
 
 Name:           libxml2
 Version:        2.9.7
-Release:        19%{?dist}.2
+Release:        20%{?dist}
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -70,6 +70,8 @@ Patch26:         libxml2-2.9.13-CVE-2022-49043.patch
 Patch27:        libxml2-2.9.13-CVE-2024-56171.patch
 # https://issues.redhat.com/browse/RHEL-80137
 Patch28:        libxml2-2.9.13-CVE-2025-24928.patch
+
+Patch100:       CVE-2025-49794-49796.patch
 
 BuildRequires:  gcc
 BuildRequires:  cmake-rpm-macros
@@ -241,6 +243,10 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
+* Wed Jul 09 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.7-20
+- Fix CVE-2025-49794
+- Fix CVE-2025-49796
+
 * Fri Mar 14 2025 Anmol Jain <ajain@ciq.com> - 2.9.7-19.2
 - Bump to ensure that previously backported pkg is updated
 
