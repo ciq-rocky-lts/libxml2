@@ -4,7 +4,7 @@
 Summary: Library providing XML and HTML support
 Name: libxml2
 Version: 2.9.1
-Release: 6.1%{?dist}%{?extra_release}.11
+Release: 6.1%{?dist}%{?extra_release}.12
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/libxml2/libxml2-%{version}.tar.gz
@@ -99,6 +99,7 @@ patch169: CVE-2024-34459.patch
 patch170: 0001-CVE-2022-49043.patch
 patch171: libxml2-2.9.1-CVE-2024-56171.patch
 patch172: libxml2-2.9.1-CVE-2025-24928.patch
+patch173: CVE-2025-49794-49796.patch
 
 %description
 This library allows to manipulate XML files. It includes support
@@ -234,6 +235,8 @@ at parse time or later once the document has been modified.
 %patch170 -p1
 %patch171 -p1
 %patch172 -p1
+%patch173 -p1
+
 %build
 %configure
 make %{_smp_mflags}
@@ -315,6 +318,10 @@ rm -fr %{buildroot}
 %doc doc/python.html
 
 %changelog
+* Wed Jul 09 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.1-6.1.12
+- Fix CVE-2025-49794
+- Fix CVE-2025-49796
+
 * Thu Apr 17 2025 Anmol Jain <ajain@ciq.com> - 2.9.1-6.1.11
 - Fix CVE-2025-24928
 
