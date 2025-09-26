@@ -7,7 +7,7 @@
 
 Name:           libxml2
 Version:        2.9.7
-Release:        20%{?dist}
+Release:        20%{?dist}.1
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -72,6 +72,7 @@ Patch27:        libxml2-2.9.13-CVE-2024-56171.patch
 Patch28:        libxml2-2.9.13-CVE-2025-24928.patch
 
 Patch100:       CVE-2025-49794-49796.patch
+Patch101:       libxml2-2.9.13-CVE-2025-6021.patch
 
 
 BuildRequires:  gcc
@@ -244,6 +245,9 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
+* Tue Sep 23 2025 Pratham Patel <ppatel@ciq.com> - 2.9.7-20.1
+- Fix CVE-2025-6021
+
 * Wed Jul 09 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.7-20
 - Fix CVE-2025-49794
 - Fix CVE-2025-49796
