@@ -1,6 +1,6 @@
 Name:           libxml2
 Version:        2.9.13
-Release:        8%{?dist}.1
+Release:        12%{?dist}
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -24,14 +24,23 @@ Patch7:         libxml2-2.9.13-CVE-2023-29469.patch
 Patch8:         libxml2-2.11.0-fix-CVE-2023-39615.patch
 # https://issues.redhat.com/browse/RHEL-34457
 Patch9:         libxml2-2.11.6-CVE-2024-25062.patch
-# https://issues.redhat.com/browse/RHEL-76294
+# https://issues.redhat.com/browse/RHEL-76298
 Patch10:        libxml2-2.9.13-CVE-2022-49043.patch
 # https://issues.redhat.com/browse/RHEL-80127
 Patch11:        libxml2-2.9.13-CVE-2024-56171.patch
 # https://issues.redhat.com/browse/RHEL-80142
 Patch12:        libxml2-2.9.13-CVE-2025-24928.patch
-
-Patch100:       CVE-2025-49794-49796.patch
+# https://issues.redhat.com/browse/RHEL-96507
+Patch13:         libxml2-2.9.13-CVE-2025-6021.patch
+# https://issues.redhat.com/browse/RHEL-96405
+# https://issues.redhat.com/browse/RHEL-96431
+Patch14:        libxml2-2.9.13-CVE-2025-49794.patch
+# https://issues.redhat.com/browse/RHEL-102806
+Patch15:        libxml2-2.9.13-CVE-2025-7425.patch
+# https://issues.redhat.com/browse/RHEL-100182
+Patch16:         libxml2-2.12.5-CVE-2025-32415.patch
+# https://issues.redhat.com/browse/RHEL-99873
+Patch17:         libxml2-2.9.13-CVE-2025-32414.patch
 
 BuildRequires:  cmake-rpm-macros
 BuildRequires:  gcc
@@ -160,19 +169,26 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
-* Wed Jul 09 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.13-8.1
-- Fix CVE-2025-49794
-- Fix CVE-2025-49796
+* Tue Aug 05 2025 David King <dking@redhat.com> - 2.9.13-12
+- Fix CVE-2025-32415 (RHEL-100182)
+- Fix CVE-2025-32414 (RHEL-99873)
 
-* Thu Mar 20 2025 Anmol Jain <ajain@ciq.com> - 2.9.13-7.1
-- Bump to ensure that previously backported pkg is updated
+* Mon Jul 21 2025 David King <dking@redhat.com> - 2.9.13-11
+- Fix CVE-2025-7425 (RHEL-102806)
 
-* Tue Mar 11 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.9.13-6.2
-- Fix CVE-2024-56171 (RHEL-80128)
-- Fix CVE-2025-24928 (RHEL-80143)
+* Mon Jun 16 2025 David King <dking@redhat.com> - 2.9.13-10
+- Fix CVE-2025-6021 (RHEL-96507)
+- Fix CVE-2025-49794 (RHEL-96405)
+- Fix CVE-2025-49796 (RHEL-96431)
 
-* Tue Feb 11 2025 David King <dking@redhat.com> - 2.9.13-6.1
-- Fix CVE-2022-49043 (RHEL-76294)
+* Wed Feb 26 2025 David King <dking@redhat.com> - 2.9.13-9
+- Fix CVE-2025-24928 (RHEL-80142)
+
+* Tue Feb 25 2025 David King <dking@redhat.com> - 2.9.13-8
+- Fix CVE-2024-56171 (RHEL-80127)
+
+* Tue Feb 11 2025 David King <dking@redhat.com> - 2.9.13-7
+- Fix CVE-2022-49043 (RHEL-76298)
 
 * Mon Apr 29 2024 David King <amigadave@amigadave.com> - 2.9.13-6
 - Fix CVE-2024-25062 (RHEL-29196)
