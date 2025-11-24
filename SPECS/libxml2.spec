@@ -7,7 +7,7 @@
 
 Name:           libxml2
 Version:        2.9.7
-Release:        20%{?dist}.1
+Release:        21%{?dist}.3
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -70,10 +70,19 @@ Patch26:         libxml2-2.9.13-CVE-2022-49043.patch
 Patch27:        libxml2-2.9.13-CVE-2024-56171.patch
 # https://issues.redhat.com/browse/RHEL-80137
 Patch28:        libxml2-2.9.13-CVE-2025-24928.patch
-
-Patch100:       CVE-2025-49794-49796.patch
-Patch101:       libxml2-2.9.13-CVE-2025-6021.patch
-
+# https://issues.redhat.com/browse/RHEL-88198
+Patch29:         libxml2-2.9.13-CVE-2025-32414.patch
+# https://issues.redhat.com/browse/RHEL-74345
+Patch30:         libxml2-clamp-output-bytes-overflow.patch
+# https://issues.redhat.com/browse/RHEL-96498
+Patch31:         libxml2-2.9.13-CVE-2025-6021.patch
+# https://issues.redhat.com/browse/RHEL-96398
+# https://issues.redhat.com/browse/RHEL-96424
+Patch32:        libxml2-2.9.13-CVE-2025-49794.patch
+# https://issues.redhat.com/browse/RHEL-102797
+Patch33:        libxml2-2.9.7-CVE-2025-7425.patch
+# https://issues.redhat.com/browse/RHEL-100177
+Patch34:         libxml2-2.12.5-CVE-2025-32415.patch
 
 BuildRequires:  gcc
 BuildRequires:  cmake-rpm-macros
@@ -245,15 +254,22 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
-* Tue Sep 23 2025 Pratham Patel <ppatel@ciq.com> - 2.9.7-20.1
-- Fix CVE-2025-6021
+* Tue Aug 05 2025 David King <dking@redhat.com> - 2.9.7.21.3
+- Fix CVE-2025-32415 (RHEL-100177)
 
-* Wed Jul 09 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.7-20
-- Fix CVE-2025-49794
-- Fix CVE-2025-49796
+* Mon Jul 21 2025 David King <dking@redhat.com> - 2.9.7.21.2
+- Fix CVE-2025-7425 (RHEL-102797)
 
-* Wed Mar 19 2025 Anmol Jain <ajain@ciq.com> - 2.9.7-19.2
-- Bump to ensure that previously backported pkg is updated
+* Mon Jun 16 2025 David King <dking@redhat.com> - 2.9.7-21.1
+- Fix CVE-2025-6021 (RHEL-96498)
+- Fix CVE-2025-49794 (RHEL-96398)
+- Fix CVE-2025-49796 (RHEL-96424)
+
+* Fri Jun 13 2025 David King <dking@redhat.com> - 2.9.7-21
+- Fix integer overflow (RHEL-74345)
+
+* Thu Jun 05 2025 David King <dking@redhat.com> - 2.9.7-20
+- Fix CVE-2025-32414 (RHEL-88198)
 
 * Tue Mar 11 2025 Michael Catanzaro <mcatanzaro@redhat.com> - 2.9.7-19
 - Fix CVE-2024-56171 (RHEL-80122)
