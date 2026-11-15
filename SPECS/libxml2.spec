@@ -1,6 +1,6 @@
 Name:           libxml2
 Version:        2.9.13
-Release:        12.1%{?dist}
+Release:        12.3%{?dist}
 Summary:        Library providing XML and HTML support
 
 License:        MIT
@@ -42,6 +42,17 @@ Patch16:         libxml2-2.12.5-CVE-2025-32415.patch
 # https://issues.redhat.com/browse/RHEL-99873
 Patch17:         libxml2-2.9.13-CVE-2025-32414.patch
 Patch18: libxml2-2.9.13-CVE-2025-27113.patch
+
+# https://git.rockylinux.org/staging/rpms/libxml2/-/raw/3c83ae907d7eb12fd3ab9650710fa94dd1727d05/SOURCES/libxml2-2.9.13-CVE-2026-6653.patch
+Patch1001: CVE-2026-6653.patch
+# https://git.rockylinux.org/staging/rpms/libxml2/-/raw/3c83ae907d7eb12fd3ab9650710fa94dd1727d05/SOURCES/libxml2-2.9.13-CVE-2026-11979.patch
+Patch1002: CVE-2026-11979.patch
+# CIQ: upstream e6401b68 (+ XML_ENT_EXPANDING from a3c8b180); fixes a recursion
+# regression introduced by the CVE-2026-6653 series (481d79d4)
+Patch1003: CVE-2026-6653-recursion-check.patch
+# CIQ: keep amplification checks in xmlStringDecodeEntities/xmlStringLenDecodeEntities
+# (dropped by the CVE-2026-6653 series, 463bbeec; upstream restored them only in 2.13)
+Patch1004: CVE-2026-6653-decoder-amplification.patch
 
 BuildRequires:  cmake-rpm-macros
 BuildRequires:  gcc
@@ -170,6 +181,17 @@ gzip -9 -c doc/libxml2-api.xml > doc/libxml2-api.xml.gz
 %{python3_sitearch}/libxml2mod.so
 
 %changelog
+* Sun Nov 15 2026 Jeff Uphoff <juphoff@ciq.com> - 2.9.13-12.3
+- Fix entity recursion check in xmlStringGetNodeList (regression from the
+  CVE-2026-6653 backport; upstream e6401b68)
+- Keep entity amplification checks in xmlStringDecodeEntities and
+  xmlStringLenDecodeEntities (dropped by the CVE-2026-6653 backport)
+- Includes the CVE-2026-6653 and CVE-2026-11979 fixes from 2.9.13-12.2
+
+* Fri Nov 06 2026 Pratham Patel <ppatel@ciq.com> - 2.9.13-12.2
+- Fix CVE-2026-6653
+- Fix CVE-2026-11979
+
 * Tue Mar 10 2026 Max Spevack <max@ciq.com> - 2.9.13-12.1
 - Fix CVE-2025-27113
 
