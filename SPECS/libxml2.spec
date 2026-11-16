@@ -4,7 +4,7 @@
 Summary: Library providing XML and HTML support
 Name: libxml2
 Version: 2.9.1
-Release: 6.1%{?dist}%{?extra_release}.13
+Release: 6.2%{?dist}%{?extra_release}.13
 License: MIT
 Group: Development/Libraries
 Source: ftp://xmlsoft.org/libxml2/libxml2-%{version}.tar.gz
@@ -103,6 +103,18 @@ patch173: CVE-2025-49794-49796.patch
 Patch174: libxml2-2.9.1-CVE-2025-6021.patch
 Patch175: libxml2-2.9.1-CVE-2025-7425.patch
 Patch176: libxml2-2.9.1-CVE-2025-32415.patch
+# CVE-2026-0989 - adapted from upstream GNOME commit: https://gitlab.gnome.org/GNOME/libxml2/-/commit/19549c61590c1873468c53e0026a2fbffae428ef.patch
+Patch177: libxml2-2.9.1-CVE-2026-0989.patch
+# CVE-2026-11979 - Amazon Linux (Q_patcher) backport of upstream c2e233fc (see the patch header): https://gitlab.gnome.org/GNOME/libxml2/-/commit/c2e233fc1b341685fc99621b2768b503f777a72e.patch
+Patch178: libxml2-2.9.1-CVE-2026-11979.patch
+# CVE-2025-27113, CVE-2025-6170, CVE-2025-32414 - Amazon Linux (Q_patcher) backport of upstream 503f788e (see the commit message): https://gitlab.gnome.org/GNOME/libxml2/-/commit/503f788e84f1c1f1d769c2c7258d77faee94b5a3.patch
+Patch179: libxml2-2.9.1-CVE-2025-27113.patch
+# CVE-2025-6170, CVE-2025-32414 - adapted from Rocky Linux: https://git.rockylinux.org/staging/rpms/libxml2/-/raw/e64a5ff7eee326c8a264b0ecf53149d90145d056/SOURCES/libxml2-2.12.5-CVE-2025-6170.patch
+Patch180: libxml2-2.9.1-CVE-2025-6170.patch
+# CVE-2025-32414, CVE-2025-6170 - Amazon Linux (Q_patcher) backport; it names upstream c0fa8ea4 (not resolvable) (see the commit message)
+Patch181: libxml2-2.9.1-CVE-2025-32414.patch
+# CVE-2026-0990 - Amazon Linux (Q_patcher) backport of upstream 1961208e (see the commit message): https://gitlab.gnome.org/GNOME/libxml2/-/commit/1961208e958ca22f80a0b4e4c9d71cfa050aa982.patch
+Patch182: libxml2-2.9.1-CVE-2026-0990.patch
 
 %description
 This library allows to manipulate XML files. It includes support
@@ -242,6 +254,12 @@ at parse time or later once the document has been modified.
 %patch174 -p1
 %patch175 -p1
 %patch176 -p1
+%patch177 -p1 -b .CVE-2026-0989
+%patch178 -p1 -b .CVE-2026-11979
+%patch179 -p1 -b .CVE-2025-27113
+%patch180 -p1 -b .CVE-2025-6170
+%patch181 -p1 -b .CVE-2025-32414
+%patch182 -p1 -b .CVE-2026-0990
 
 %build
 %configure
@@ -324,6 +342,14 @@ rm -fr %{buildroot}
 %doc doc/python.html
 
 %changelog
+* Mon Aug 24 2026 Jason Rodriguez <jrodriguez@ciq.com> - 2.9.1-6.2.13
+- Fix CVE-2026-0989
+- Fix CVE-2026-11979
+- Fix CVE-2025-27113
+- Fix CVE-2025-6170
+- Fix CVE-2025-32414
+- Fix CVE-2026-0990
+
 * Wed Nov 19 2025 Trinity Quirk <tquirk@ciq.com> - 2.9.1-6.1.13
 - Fix CVE-2025-6021
 - Fix CVE-2025-7425
